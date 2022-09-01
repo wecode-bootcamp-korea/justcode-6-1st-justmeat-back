@@ -48,12 +48,25 @@ const deleteCart = async (req, res) => {
 
   try {
     await cart.deleteCart(pk)
-    res.status(204).json({ message: "Deleted Cart" });
+    res.status(201).json({ message: "Deleted Cart" });
   }
   catch (err) {
     console.log(err)
     res.status(500).json({ message: "Error deleted Cart" })
   }
-
 }
-module.exports = { createCart, updateCart, deleteCart };
+
+const readCart = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const GETcart = await cart.readCart(userId)
+    res.status(201).json({ "data": GETcart })
+  }
+  catch (err) {
+    console.log(err)
+    return res.status(err.statusCode || 500).json(err.message)
+  }
+};
+
+module.exports = { createCart, updateCart, deleteCart, readCart };

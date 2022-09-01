@@ -19,6 +19,7 @@ myDataSource
     console.log("Database initiate fail");
   });
 
+
 const createCart = async (userId, productId, productAmount, paymentAmount) => {
   return await myDataSource.query(`
   INSERT INTO cart_lists (userId, productId, productAmount, paymentAmount)
@@ -27,7 +28,6 @@ const createCart = async (userId, productId, productAmount, paymentAmount) => {
 }
 
 const updateCart = async (userId, productId, productAmount, paymentAmount) => {
-  console.log("payment", paymentAmount)
   const cart = await myDataSource.query(`
   UPDATE cart_lists
   SET productAmount = ?, paymentAmount = ?
@@ -43,4 +43,22 @@ const deleteCart = async (pk) => {
   `, [pk])
 }
 
-module.exports = { createCart, updateCart, deleteCart };
+const readCart = async (userId) => {
+  const GETcart = await myDataSource.query(`
+  SELECT
+  cart_lists.userId,
+  JSON_ARRAYAGG(
+    JSON_OBJECT(
+      'productId', cart_lists.productId,
+      'productAmount', cart_lists.productAmount,
+      'paymentAmount', cart_lists.paymentAmount
+    )
+  ) as cart
+  FROM justmeat.cart_lists
+  WHERE userId = ?
+  GROUP BY userId
+  `, [userId])
+  return GETcart;
+}
+
+module.exports = { createCart, updateCart, deleteCart, readCart };
