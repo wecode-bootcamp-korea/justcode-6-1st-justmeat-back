@@ -21,9 +21,26 @@ myDataSource
 
 const createCart = async (userId, productId, productAmount, paymentAmount) => {
   return await myDataSource.query(`
-  INSERT INTO cart_list (userId, productId, productAmount, paymentAmount)
+  INSERT INTO cart_lists (userId, productId, productAmount, paymentAmount)
   VALUES(?,?,?,?)
   `, [userId, productId, productAmount, paymentAmount]);
 }
 
-module.exports = { createCart };
+const updateCart = async (userId, productId, productAmount, paymentAmount) => {
+  console.log("payment", paymentAmount)
+  const cart = await myDataSource.query(`
+  UPDATE cart_lists
+  SET productAmount = ?, paymentAmount = ?
+  WHERE userId = ? AND productId = ?;
+  `, [productAmount, paymentAmount, userId, productId]);
+  return cart;
+}
+
+const deleteCart = async (pk) => {
+  await myDataSource.query(`
+  DELETE FROM cart_lists
+  WHERE id =?
+  `, [pk])
+}
+
+module.exports = { createCart, updateCart, deleteCart };
