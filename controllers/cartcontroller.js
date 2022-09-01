@@ -26,8 +26,34 @@ const createCart = async (req, res) => {
   }
   catch (err) {
     console.log(err)
-    return res.json;
+    return res.status(err.statusCode || 500).json(err.message)
   }
 };
 
-module.exports = { createCart };
+const updateCart = async (req, res) => {
+  const { userId, productId, productAmount, paymentAmount } = req.body;
+
+  try {
+    await cart.updateCart(userId, productId, productAmount, paymentAmount);
+    res.status(201).json({ message: 'updateCart' });
+  }
+  catch (err) {
+    console.log(err)
+    return res.status(err.statusCode || 500).json(err.message)
+  }
+}
+
+const deleteCart = async (req, res) => {
+  const pk = req.params.pk;
+
+  try {
+    await cart.deleteCart(pk)
+    res.status(204).json({ message: "Deleted Cart" });
+  }
+  catch (err) {
+    console.log(err)
+    res.status(500).json({ message: "Error deleted Cart" })
+  }
+
+}
+module.exports = { createCart, updateCart, deleteCart };
