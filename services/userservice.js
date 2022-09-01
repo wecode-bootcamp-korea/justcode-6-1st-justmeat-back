@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-const user = require("../models/userDao");
+const user = require("../models/userdao");
 
 const createUser = async (email, password, name, phone) => {
 

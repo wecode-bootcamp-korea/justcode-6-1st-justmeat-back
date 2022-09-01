@@ -1,4 +1,4 @@
-const user = require("../services/userService");
+const user = require("../services/userservice");
 
 const createUser = async (req, res) => {
   const { email, password, name, phone } = req.body;
@@ -22,7 +22,6 @@ const createUser = async (req, res) => {
 
 
   try {
-
     const userData = await user.createUser1(email);
 
     if (userData) {
@@ -31,13 +30,10 @@ const createUser = async (req, res) => {
 
     if (!email.includes('@')) {
       res.status(400).json('Email_INVALID');
-
     }
-    // if (password.length < 10) {
-    //   throw new Error('PASSWORD_INVALID')
-    // }
-
-    //
+    if (password.length < 10) {
+      throw new Error('PASSWORD_INVALID')
+    }
 
     await user.createUser(email, password, name, phone);
 
@@ -71,6 +67,5 @@ const login = async (req, res) => {
     res.status(err.statusCode || 500).json(err.message)
   }
 }
-
 
 module.exports = { createUser, login };

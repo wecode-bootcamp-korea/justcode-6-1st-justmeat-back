@@ -25,6 +25,7 @@ const createUser = async (email, hashedPw, name, phone) => {
   VALUES(?,?,?,?)
   `, [email, hashedPw, name, phone]);
 }
+
 const readUserByEmail1 = async (email) => {
   const [user] = await myDataSource.query(`
   SELECT email, password
