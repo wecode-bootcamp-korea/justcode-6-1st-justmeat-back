@@ -1,5 +1,5 @@
 {
-  "name": "node-project-template",
+  "name": "project-template",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "bcryptjs": "^2.4.3",
     "eslint": "^8.18.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -20,6 +21,20 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "prisma": "^3.15.2"
-  }
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.3",
+    "prisma": "^3.15.2",
+    "serve-static": "^1.15.0",
+    "typeorm": "^0.3.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wecode-bootcamp-korea/justcode-6-1st-justmeat-back.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/wecode-bootcamp-korea/justcode-6-1st-justmeat-back/issues"
+  },
+  "homepage": "https://github.com/wecode-bootcamp-korea/justcode-6-1st-justmeat-back#readme"
 }
