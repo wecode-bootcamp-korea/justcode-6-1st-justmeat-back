@@ -1,13 +1,15 @@
 const express = require('express');
-
-const userRouter = require('./user');
-const productrouter = require('./productrouter');
-// const otherRouter = require('./other');
-
 const router = express.Router();
 
-router.use("/", userRouter);
+const userrouter = require("../routes/userrouter");
+
+const productrouter = require('./productrouter');
+const cartrouter = require("../routes/cartrouter");
+const salerouter = require("../routes/salerouter");
+
+router.use('/user', userrouter);
 router.use("/product", productrouter);
-// router.use(otherRouter);
+router.use('/cart', cartrouter);
+router.use('/sale', salerouter);
 
 module.exports = router;
