@@ -20,11 +20,11 @@ myDataSource
   });
 
 
-const createCart = async (userId, productId, productAmount, productPrice) => {
+const createCart = async (userId, productId, productAmount, paymentAmount) => {
   return await myDataSource.query(`
   INSERT INTO cart_lists (userId, productId, productAmount, paymentAmount)
   VALUES(?,?,?,?)
-  `, [userId, productId, productAmount, productAmount * productPrice]);
+  `, [userId, productId, productAmount, paymentAmount]);
 }
 
 const updateCart = async (userId, productId, productAmount, productPrice) => {
@@ -61,35 +61,22 @@ const deleteCart = async (pk) => {
 //   return GETcart;
 // }
 
-// const readCart = async (req, res) => {
-//   const GETcart = await myDataSource.query(`
-//   SELECT
-//   cart_lists.productId as productId,
-//   cart_lists.userId as userId,
-//   products.productImgbyId as productImg,
-//   products.productName as productName,
-//   products.productOption as width,
-//   cart_lists.productAmount as productAmount,
-//   products.price as productPrice,
-//   cart_lists.paymentAmount as paymentAmount
-//   FROM justmeat.cart_lists
-//   JOIN justmeat.products ON products.categoryId = cart_lists.productId;
-//   `)
-//   return GETcart;
-// }
+
+const readCart = async (userId) => {
+  const GETcart = await myDataSource.query(`
+  select * from cart_lists as t1 
+  INNER JOIN products as t2 on t1.productId = t2.id where t1.userId = ?;
+
+  `, [userId])
+  return GETcart;
+}
 
 // const readCart = async (userId) => {
 //   const GETcart = await myDataSource.query(`
-//   select * from cart_lists as t1 
-//   INNER JOIN product as t2 on t1.productId = t2.id where t1.userId = ?;
-
-//   `, [userId])
-//   return GETcart;
+//   select * from cart_lists 
+//   where userId = ?  
+//   INNER JOIN products on cart_lists.productId = products.categoryId;`, [userId])
 // }
-const readCart = async (userId) => {
-  const GETcart = await myDataSource.query(`
-  select * from cart_lists as t1 INNER JOIN product as t2 on t1.productId = t2.id where t1.userId = ?;`, [userId])
-}
 
 // 추가추가
 const checkCart = async (userId, productId, productAmount, paymentAmount) => {
