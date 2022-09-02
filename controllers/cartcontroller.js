@@ -1,8 +1,22 @@
 const cart = require("../services/cartservice");
 
+// 추가추가
+const createOrUpdateCart = async (req, res) => {
+  const { userId, productId, productAmount } = req.body;
+
+  try {
+    const checkCart = await cart.checkCart(userId, productId, productAmount)
+    res.status(201).json({ message: "createdCart or updateCart" })
+  }
+  catch (err) {
+    console.log(err)
+    return res.status(err.statusCode || 500).json(err.message)
+  }
+};
+
 const createCart = async (req, res) => {
-  const { userId, productId, productAmount, paymentAmount } = req.body;
-  const hasKey = { userId: false, productId: false, productAmount: false, paymentAmount: false };
+  const { userId, productId, productAmount } = req.body;
+  const hasKey = { userId: false, productId: false, productAmount: false };
   const requireKey = Object.keys(hasKey);
 
   Object.entries(req.body).forEach((keyValue) => {
@@ -21,7 +35,7 @@ const createCart = async (req, res) => {
   }
 
   try {
-    await cart.createCart(userId, productId, productAmount, paymentAmount);
+    await cart.createCart(userId, productId, productAmount);
     res.status(201).json({ message: 'cartCreated' });
   }
   catch (err) {
@@ -31,17 +45,17 @@ const createCart = async (req, res) => {
 };
 
 const updateCart = async (req, res) => {
-  const { userId, productId, productAmount, paymentAmount } = req.body;
+  const { userId, productId, productAmount } = req.body;
 
   try {
-    await cart.updateCart(userId, productId, productAmount, paymentAmount);
+    await cart.updateCart(userId, productId, productAmount);
     res.status(201).json({ message: 'updateCart' });
   }
   catch (err) {
     console.log(err)
     return res.status(err.statusCode || 500).json(err.message)
   }
-}
+};
 
 const deleteCart = async (req, res) => {
   const pk = req.params.pk;
@@ -54,7 +68,7 @@ const deleteCart = async (req, res) => {
     console.log(err)
     res.status(500).json({ message: "Error deleted Cart" })
   }
-}
+};
 
 const readCart = async (req, res) => {
 
@@ -69,20 +83,5 @@ const readCart = async (req, res) => {
     return res.status(err.statusCode || 500).json(err.message)
   }
 };
-
-// 추가추가
-const createOrUpdateCart = async (req, res) => {
-  const { userId, productId, productAmount, paymentAmount } = req.body;
-  console.log(req.body)
-
-  try {
-    const checkCart = await cart.checkCart(userId, productId, productAmount, paymentAmount)
-    res.status(201).json({ message: "createdCart or updateCart" })
-  }
-  catch (err) {
-    console.log(err)
-    return res.status(err.statusCode || 500).json(err.message)
-  }
-}
 
 module.exports = { createCart, updateCart, deleteCart, readCart, createOrUpdateCart };
