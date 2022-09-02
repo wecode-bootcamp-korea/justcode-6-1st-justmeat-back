@@ -61,4 +61,16 @@ const readCart = async (userId) => {
   return GETcart;
 }
 
-module.exports = { createCart, updateCart, deleteCart, readCart };
+// 추가추가
+const checkCart = async (userId, productId, productAmount, paymentAmount) => {
+
+  // cart_lists에 값이 담겨져 있는지 체크하는 구문
+  const cart = await myDataSource.query(`
+  SELECT * FROM cart_lists where userId = ? and productId = ?
+  `, [userId, productId]);
+
+  // cart_lists에 값이 담겨져 있으면 updateCart(); 실행, 값이 없으면 createCart();
+  return cart ? await updateCart(userId, productId, productAmount, paymentAmount) : await createCart(userId, productId, productAmount, paymentAmount);
+}
+
+module.exports = { createCart, updateCart, deleteCart, readCart, checkCart };

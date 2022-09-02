@@ -16,4 +16,9 @@ const readCart = async (userId) => {
   return await cart.readCart(userId);
 }
 
-module.exports = { createCart, updateCart, deleteCart, readCart };
+// 추가추가
+const checkCart = async (userId, productId, productAmount, paymentAmount) => {
+  return await cart.checkCart(userId, productId, productAmount, paymentAmount);
+}
+
+module.exports = { createCart, updateCart, deleteCart, readCart, checkCart };
