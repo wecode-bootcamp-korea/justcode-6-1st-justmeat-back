@@ -69,4 +69,18 @@ const readCart = async (req, res) => {
   }
 };
 
-module.exports = { createCart, updateCart, deleteCart, readCart };
+// 추가추가
+const createOrUpdateCart = async (req, res) => {
+  const { userId, productId, productAmount, paymentAmount } = req.body;
+
+  try {
+    const checkCart = await cart.checkCart(userId, productId, productAmount, paymentAmount)
+    res.status(201).json({ "data": checkCart })
+  }
+  catch (err) {
+    console.log(err)
+    return res.status(err.statusCode || 500).json(err.message)
+  }
+}
+
+module.exports = { createCart, updateCart, deleteCart, readCart, createOrUpdateCart };
