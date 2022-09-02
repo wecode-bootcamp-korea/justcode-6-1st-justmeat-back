@@ -3,12 +3,12 @@ const router = express.Router();
 
 const cartcontroller = require("../controllers/cartcontroller");
 
-router.post('/', cartcontroller.createCart);
-router.patch('/', cartcontroller.updateCart);
+//router.post('/', cartcontroller.createCart);
+//router.patch('/', cartcontroller.updateCart);
 router.delete('/:pk', cartcontroller.deleteCart);
 router.get('/:userId', cartcontroller.readCart);
 
 // 추가추가
-router.post('/cOu', cartcontroller.createOrUpdateCart);
+router.post('/', cartcontroller.createOrUpdateCart);
 
 module.exports = router;
