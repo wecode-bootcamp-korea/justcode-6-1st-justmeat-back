@@ -56,7 +56,7 @@ const deleteCart = async (req, res) => {
   }
 }
 
-const readCart = async (req, res) => {
+const readCart = async (res, req) => {
   const userId = req.params.userId;
 
   try {
@@ -71,11 +71,12 @@ const readCart = async (req, res) => {
 
 // 추가추가
 const createOrUpdateCart = async (req, res) => {
-  const { userId, productId, productAmount, paymentAmount } = req.body;
+  const { userId, productId, productAmount, productPrice } = req.body;
+  console.log(req.body)
 
   try {
-    const checkCart = await cart.checkCart(userId, productId, productAmount, paymentAmount)
-    res.status(201).json({ "data": checkCart })
+    const checkCart = await cart.checkCart(userId, productId, productAmount, productPrice)
+    res.status(201).json({ message: "createdCart or updateCart" })
   }
   catch (err) {
     console.log(err)

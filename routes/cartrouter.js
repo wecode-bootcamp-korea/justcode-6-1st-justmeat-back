@@ -9,6 +9,6 @@ router.delete('/:pk', cartcontroller.deleteCart);
 router.get('/:userId', cartcontroller.readCart);
 
 // 추가추가
-router.post("createOrUpdate", cartcontroller.createOrUpdateCart);
+router.post('/cOu', cartcontroller.createOrUpdateCart);
 
 module.exports = router;
