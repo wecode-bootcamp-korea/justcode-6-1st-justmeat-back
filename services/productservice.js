@@ -7,6 +7,11 @@ const getBestItems = async () => {
   return await productdao.getBestItems();
 };
 
+const getItemsByCategories = async (categoryId) => {
+  return await productdao.getItemsByCategories(categoryId);
+}
+
 module.exports = {
-  getBestItems,  
+  getBestItems,
+  getItemsByCategories,  
 }

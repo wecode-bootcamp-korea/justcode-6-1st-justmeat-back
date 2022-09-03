@@ -23,6 +23,13 @@ const getBestItems = async () => {
     `SELECT * FROM justmeat.products order by salesAmount desc LIMIT 6;`);
 };
 
+const getItemsByCategories = async (categoryId) => {
+  return await myDataSource.query(
+    `SELECT * FROM justmeat.products WHERE categoryId = ?;`
+  , categoryId);
+}
+
 module.exports = {
-  getBestItems
+  getBestItems,
+  getItemsByCategories,
 };
