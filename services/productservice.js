@@ -11,7 +11,12 @@ const getItemsByCategories = async (categoryId) => {
   return await productdao.getItemsByCategories(categoryId);
 }
 
+const getProductDetails = async (productId) => {
+  return await productdao.getProductDetails(productId);
+}
+
 module.exports = {
   getBestItems,
-  getItemsByCategories,  
+  getItemsByCategories,
+  getProductDetails  
 }
