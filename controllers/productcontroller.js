@@ -20,7 +20,18 @@ const getItemsByCategories = async (req, res) => {
   }
 }
 
+const getProductDetails = async (req, res) => {
+  const productId = req.query.id;
+  try {
+    const itemData = await productservice.getProductDetails(productId);
+    res.status(201).json({ itemData });
+  }catch {
+    res.status(500).json({ message: "ERROR"});
+  }
+}
+
   module.exports = {
     getBestItems,
     getItemsByCategories,
+    getProductDetails,
   };

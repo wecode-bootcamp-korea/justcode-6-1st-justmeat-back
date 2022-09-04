@@ -29,7 +29,14 @@ const getItemsByCategories = async (categoryId) => {
   , categoryId);
 }
 
+const getProductDetails = async (productId) => {
+  return await myDataSource.query(
+    `SELECT * FROM justmeat.products JOIN justmeat.productImages ON products.productImgById = productImages.id WHERE products.id = ?;`, productId
+  )
+}
+
 module.exports = {
   getBestItems,
   getItemsByCategories,
+  getProductDetails
 };
