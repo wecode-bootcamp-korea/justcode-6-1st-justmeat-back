@@ -1,11 +1,10 @@
 const cart = require("../services/cartservice");
-
 // 추가추가
 const createOrUpdateCart = async (req, res) => {
   const { userId, productId, productAmount } = req.body;
 
   try {
-    const checkCart = await cart.checkCart(userId, productId, productAmount)
+    const checkcart = await cart.checkCart(userId, productId, productAmount)
     res.status(201).json({ message: "createdCart or updateCart" })
   }
   catch (err) {
@@ -45,10 +44,11 @@ const createCart = async (req, res) => {
 };
 
 const updateCart = async (req, res) => {
+  //const userId = req.params.userId
   const { userId, productId, productAmount } = req.body;
 
   try {
-    await cart.updateCart(userId, productId, productAmount);
+    const GETcart = await cart.updateCart(userId, productId, productAmount);
     res.status(201).json({ message: 'updateCart' });
   }
   catch (err) {

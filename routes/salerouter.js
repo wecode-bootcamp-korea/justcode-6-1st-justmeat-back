@@ -3,6 +3,6 @@ const router = express.Router();
 
 const salecontroller = require("../controllers/salecontroller");
 
-router.post('/', salecontroller.createSale);
+router.post('/:userId', salecontroller.createSale);
 
 module.exports = router;

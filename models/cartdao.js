@@ -32,19 +32,19 @@ const createCart = async (userId, productId, productAmount) => {
 `, [userId, productId, productAmount, result * productAmount]);
 }
 
-
 const updateCart = async (userId, productId, productAmount) => {
+
   const price = await myDataSource.query(`
-     SELECT price FROM products WHERE products.id = ?
-  `, [productId]);
+       SELECT price FROM products WHERE products.id = ?
+   `, [productId]);
   const result = price[0].price;
 
-  const cart = await myDataSource.query(`
+  return await myDataSource.query(`
   UPDATE cart_lists
   SET productAmount = ?, paymentAmount = ?
   WHERE userId = ? AND productId = ?;
   `, [productAmount, productAmount * result, userId, productId]);
-  return cart;
+
 }
 
 const deleteCart = async (pk) => {
@@ -72,12 +72,10 @@ const deleteCart = async (pk) => {
 //   return GETcart;
 // }
 
-
 const readCart = async (userId) => {
   const GETcart = await myDataSource.query(`
   select * from cart_lists as t1 
   INNER JOIN products as t2 on t1.productId = t2.id where t1.userId = ?;
-
   `, [userId])
   return GETcart;
 }

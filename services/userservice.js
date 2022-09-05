@@ -29,6 +29,7 @@ const login = async (email, password) => {
   }
 
   const isPasswordCorrect = bcrypt.compareSync(password, userd.password)
+
   if (!isPasswordCorrect) {
     const error = new Error("INVALID PASSWORD")
     error.statusCode = 400
@@ -37,7 +38,11 @@ const login = async (email, password) => {
 
   if (userd.email && isPasswordCorrect) {
     const token = jwt.sign({ email: userd.email }, 'secretKey') //process.env.secretKey
-    return token;
+    console.log(userd.id)
+    return {
+      accessToken: token,
+      user_pk: userd.id
+    };
   }
 }
 

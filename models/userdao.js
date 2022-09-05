@@ -47,12 +47,13 @@ const confirmNum = async (phone) => {
 
 const login = async (email) => {
   const [user] = await myDataSource.query(`
-  SELECT email, password
+  SELECT id, email, password
   FROM users
   WHERE email = ?
   `, [email]);
   return user
 }
+
 
 module.exports = { createUser, readUserByEmail1, confirmNum, login };
 

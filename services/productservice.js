@@ -8,5 +8,5 @@ const getBestItems = async () => {
 };
 
 module.exports = {
-  getBestItems,  
+  getBestItems,
 }

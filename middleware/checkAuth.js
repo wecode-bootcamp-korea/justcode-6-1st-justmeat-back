@@ -21,10 +21,13 @@ const isAuthenticated = async (req, res, next) => {
         if (userData) {
             return next();
         } else {
-            throw error;
-        }   
+            const error = new Error("NO_USER")
+            error.statusCode = 400
+            throw error
+        }
     } catch (error) {
         // 401 에러코드는 인증관련 오류 코드임
+        console.log(error)
         res.status(401).json({ message: "INVALID_TOKEN" });
     }
 };

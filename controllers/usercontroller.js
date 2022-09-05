@@ -94,6 +94,7 @@ const login = async (req, res) => {
 
   try {
     const token = await user.login(email, password)
+    console.log(token)
     res.status(200).json({ message: 'LOGIN_SUCCESS', token })
   }
   catch (err) {
