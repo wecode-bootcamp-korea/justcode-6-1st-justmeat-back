@@ -66,7 +66,7 @@ const deleteCart = async (req, res) => {
   }
   catch (err) {
     console.log(err)
-    res.status(500).json({ message: "Error deleted Cart" })
+    return res.status(err.statusCode || 500).json(err.message)
   }
 };
 

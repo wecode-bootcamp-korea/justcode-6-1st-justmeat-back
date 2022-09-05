@@ -8,6 +8,7 @@ const createApp = () => {
   app.use(express.json());
   app.use(routes);
   app.use(express.static('public'));
+  app.use(express.urlencoded({ extended: true }));
   return app;
 }
 module.exports = { createApp };
