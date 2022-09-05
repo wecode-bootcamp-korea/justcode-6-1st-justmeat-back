@@ -4,7 +4,7 @@ const createOrUpdateCart = async (req, res) => {
   const { userId, productId, productAmount } = req.body;
 
   try {
-    const checkcart = await cart.checkCart(userId, productId, productAmount)
+    await cart.checkCart(userId, productId, productAmount)
     res.status(201).json({ message: "createdCart or updateCart" })
   }
   catch (err) {
@@ -44,11 +44,10 @@ const createCart = async (req, res) => {
 };
 
 const updateCart = async (req, res) => {
-  //const userId = req.params.userId
   const { userId, productId, productAmount } = req.body;
 
   try {
-    const GETcart = await cart.updateCart(userId, productId, productAmount);
+    await cart.updateCart(userId, productId, productAmount);
     res.status(201).json({ message: 'updateCart' });
   }
   catch (err) {

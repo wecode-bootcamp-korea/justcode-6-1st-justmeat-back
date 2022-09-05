@@ -21,10 +21,10 @@ myDataSource
 
 
 const createCart = async (userId, productId, productAmount) => {
-  const price = await myDataSource.query(`
+  const productprice = await myDataSource.query(`
     SELECT price FROM products WHERE products.id = ?
   `, [productId]);
-  const result = price[0].price;
+  const result = productprice[0].price;
 
   await myDataSource.query(`
   INSERT INTO cart_lists(userId, productId, productAmount, paymentAmount)
@@ -34,17 +34,17 @@ const createCart = async (userId, productId, productAmount) => {
 
 const updateCart = async (userId, productId, productAmount) => {
 
-  const price = await myDataSource.query(`
-       SELECT price FROM products WHERE products.id = ?
+  const productprice = await myDataSource.query(`
+    SELECT price FROM products WHERE products.id = ?
    `, [productId]);
-  const result = price[0].price;
+  const result = productprice[0].price;
 
-  return await myDataSource.query(`
+  await myDataSource.query(`
   UPDATE cart_lists
   SET productAmount = ?, paymentAmount = ?
   WHERE userId = ? AND productId = ?;
   `, [productAmount, productAmount * result, userId, productId]);
-
+  return
 }
 
 const deleteCart = async (pk) => {
@@ -54,42 +54,16 @@ const deleteCart = async (pk) => {
   `, [pk])
 }
 
-// const readCart = async (userId) => {
-//   const GETcart = await myDataSource.query(`
-//   SELECT
-//   cart_lists.userId,
-//   JSON_ARRAYAGG(
-//     JSON_OBJECT(
-//       'productId', cart_lists.productId,
-//       'productAmount', cart_lists.productAmount,
-//       'paymentAmount', cart_lists.paymentAmount
-//     )
-//   ) as cart
-//   FROM justmeat.cart_lists
-//   WHERE userId = ?
-//   GROUP BY userId
-//   `, [userId])
-//   return GETcart;
-// }
-
 const readCart = async (userId) => {
   const GETcart = await myDataSource.query(`
-  select * from cart_lists as t1 
-  INNER JOIN products as t2 on t1.productId = t2.id where t1.userId = ?;
+  SELECT * from cart_lists
+  INNER JOIN products on cart_lists.productId = products.id where cart_lists.userId = ?;
   `, [userId])
   return GETcart;
 }
 
-// const readCart = async (userId) => {
-//   const GETcart = await myDataSource.query(`
-//   select * from cart_lists 
-//   where userId = ?  
-//   INNER JOIN products on cart_lists.productId = products.categoryId;`, [userId])
-// }
-
 // 추가추가
 const checkCart = async (userId, productId, productAmount) => {
-
   // cart_lists에 값이 담겨져 있는지 체크하는 구문
   const cart = await myDataSource.query(`
   SELECT * FROM cart_lists where userId = ? and productId = ?
