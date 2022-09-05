@@ -25,8 +25,27 @@ const getProductDetails = async (req, res) => {
   try {
     const itemData = await productservice.getProductDetails(productId);
     res.status(201).json({ itemData });
-  }catch {
+  } catch {
     res.status(500).json({ message: "ERROR"});
+  }
+}
+
+const getProductReview = async (req, res) => {
+  const productId = req.query.id;
+  try {
+    const itemData = await productservice.getProductReview(productId);
+    res.status(201).json({itemData});
+  } catch {
+    res.status(500).json({message: "ERROR"});
+  }
+}
+
+const createProductReview = async (req, res) => {
+  const { productId, userId, title, content } = req.query;
+  try {
+    const itemData = await productservice.createProductReview(productId, userId, title, content);
+  } catch {
+    res.status(500).json({message: "ERROR"});
   }
 }
 
@@ -34,4 +53,6 @@ const getProductDetails = async (req, res) => {
     getBestItems,
     getItemsByCategories,
     getProductDetails,
+    getProductReview,
+    createProductReview,
   };

@@ -31,12 +31,26 @@ const getItemsByCategories = async (categoryId) => {
 
 const getProductDetails = async (productId) => {
   return await myDataSource.query(
-    `SELECT * FROM justmeat.products JOIN justmeat.productImages ON products.productImgById = productImages.id WHERE products.id = ?;`, productId
+    `SELECT products.id, products.productName, products.price, products.weight, products.productImgMain, products.productOption, products.stock, products.salesAmount, products.isAntibioticFree, productImages.productImg1, productImages.productImg2, productImages.productImg3 FROM justmeat.products JOIN justmeat.productImages ON products.productImgById = productImages.id WHERE products.id = ?;`, productId
+  )
+}
+
+const getProductReview = async (productId) => {
+  return await myDataSource.query(
+    
+  )
+}
+
+const createProductReview = async (productId, userId, title, content) => {
+  return await myDataSource.query(
+
   )
 }
 
 module.exports = {
   getBestItems,
   getItemsByCategories,
-  getProductDetails
+  getProductDetails,
+  getProductReview,
+  createProductReview,
 };
