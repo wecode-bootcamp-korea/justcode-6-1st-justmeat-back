@@ -54,6 +54,5 @@ const login = async (email) => {
   return user
 }
 
-
 module.exports = { createUser, readUserByEmail1, confirmNum, login };
 
