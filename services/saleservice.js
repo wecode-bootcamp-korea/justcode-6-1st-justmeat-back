@@ -15,6 +15,11 @@ const updateProduct = async (userId) => {
 const deleteCart = async (userId) => {
   return await sale.deleteCart(userId)
 }
+
+const pointCheck = async (userId) => {
+  return await sale.pointCheck(userId)
+}
+
 // const updateSale = async (userId) => {
 //   return await sale.checkPoint(userId)
 // }
@@ -23,7 +28,7 @@ const deleteCart = async (userId) => {
 //   return await sale.deleteCart(userId)
 // }
 
-module.exports = { createSale, readSale, updateProduct, deleteCart }
+module.exports = { createSale, readSale, updateProduct, deleteCart, pointCheck }
   // updateSale, }
   //  deleteCart }
 

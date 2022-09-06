@@ -28,6 +28,19 @@ const readSale = async (req, res) => {
   }
 }
 
+const pointCheck = async (req, res) => {
+  const { userId } = req.body
+  try {
+    await sale.pointCheck(userId)
+    res.status(201).json({ message: "point check After payment" })
+  }
+  catch (err) {
+    console.log(err)
+    return res.status(err.statusCode || 500).json(err.message)
+  }
+}
+
+
 // const updateProduct = async (req, res) => {
 //   const userId = req.params.userId;
 
@@ -41,6 +54,6 @@ const readSale = async (req, res) => {
 //   }
 // }
 
-module.exports = { createSale, readSale }
+module.exports = { createSale, readSale, pointCheck }
 //  updateProduct }
 

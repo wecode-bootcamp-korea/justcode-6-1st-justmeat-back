@@ -1,4 +1,4 @@
-const { DataSource } = require("typeorm");
+const { DataSource, Table } = require("typeorm");
 
 const myDataSource = new DataSource({
   type: process.env.TYPEORM_CONNECTION,
@@ -65,7 +65,29 @@ const deleteCart = async (userId) => {
   `, [userId])
 }
 
-module.exports = { createSale, readSaleByUser, updateProduct, deleteCart }
+//sales 합계
+const pointCheck = async (userId) => {
+
+  const sumpay = await myDataSource.query(`
+  SELECT sum (paymentAmount) as tA FROM cart_lists
+  WHERE userId = ?
+  `, [userId]);
+  const salespay = sumpay[0].tA
+
+  // user의 포인트
+  const result = await myDataSource.query(`
+  SELECT point FROM users
+  WHERE userId = ?
+  `, [userId]);
+  const remainingPoint = result[0].point
+
+  return remainingPoint > salespay ? await createSale(userId)
+    && await updateProduct(userId) && await deleteCart
+    : res.status(201).json({ message: "No remain Point" })
+}
+
+
+module.exports = { createSale, readSaleByUser, updateProduct, deleteCart, pointCheck }
 
 // const checkPoint = async (userId) => {
 //   try {
