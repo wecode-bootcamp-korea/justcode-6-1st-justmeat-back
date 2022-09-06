@@ -4,6 +4,7 @@ const createSale = async (req, res) => {
   const userId = req.params.userId;
 
   try {
+    await sale.pointCheck(userId)
     await sale.createSale(userId)
     await sale.updateProduct(userId)
     await sale.deleteCart(userId)
