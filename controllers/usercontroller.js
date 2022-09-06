@@ -1,3 +1,4 @@
+const { Equal } = require("typeorm");
 const user = require("../services/userservice");
 
 const createUser = async (req, res) => {
@@ -60,7 +61,7 @@ const confirmNum = async (req, res) => {
     const userPhone = await user.existedphone(phone);
 
     if (userPhone) {
-      return res.status(400).json({ message: "존재하는 핸드폰 번호 입니다" })
+      return res.status(401).json({ message: "존재하는 핸드폰 번호 입니다" })
     }
     if (!userPhone) {
       return res.status(201).json({ message: "wdtpid!DUCT7mk4" })

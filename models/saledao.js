@@ -44,17 +44,21 @@ const updateProduct = async (userId) => {
     const stockproduct = productid[i].stock
     const salesAmountproduct = productid[i].salesAmount
 
-    const saleAmount = await myDataSource.query(`
+    if (stockproduct >= salesAmountproduct && stockproduct > 0) {
+      const saleAmount = await myDataSource.query(`
   SELECT productId, productAmount FROM sales
   where sales.userId = ?`, [userId])
 
-    for (let j = 0; j < saleAmount.length; j++) {
-      const result = await myDataSource.query(`
+      for (let j = 0; j < saleAmount.length; j++) {
+        const result = await myDataSource.query(`
   UPDATE products
   SET stock = ?, salesAmount = ?
   WHERE id = ?;
   `, [stockproduct - saleAmount[j].productAmount, salesAmountproduct + saleAmount[j].productAmount, saleAmount[j].productId])
+      }
+      return true;
     }
+    else false;
   }
 }
 
@@ -64,7 +68,6 @@ const deleteCart = async (userId) => {
   WHERE userId =?
   `, [userId])
 }
-
 //sales 합계
 const pointCheck = async (userId) => {
 
@@ -87,10 +90,9 @@ const pointCheck = async (userId) => {
   SET point = ?
   WHERE id = ?
   `, [remainingPoint - salespay, userId])
-    console.log(remainingPoint - salespay)
-    return;
+    return true;
   } else {
-    return;
+    return false;
   }
 }
 module.exports = { createSale, readSaleByUser, updateProduct, deleteCart, pointCheck }

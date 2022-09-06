@@ -47,11 +47,11 @@ const updateCart = async (userId, productId, productAmount) => {
   return
 }
 
-const deleteCart = async (pk) => {
-  await myDataSource.query(`
+const deleteCart = async (id) => {
+  return myDataSource.query(`
   DELETE FROM cart_lists
   WHERE id =?
-  `, [pk])
+  `, [id])
 }
 
 const readCart = async (userId) => {

@@ -38,7 +38,6 @@ const login = async (email, password) => {
 
   if (userd.email && isPasswordCorrect) {
     const token = jwt.sign({ email: userd.email }, 'secretKey') //process.env.secretKey
-    console.log(userd.id)
     return {
       accessToken: token,
       user_pk: userd.id
