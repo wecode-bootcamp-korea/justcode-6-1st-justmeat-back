@@ -8,8 +8,8 @@ const updateCart = async (userId, productId, productAmount) => {
   return await cart.updateCart(userId, productId, productAmount);
 }
 
-const deleteCart = async (pk) => {
-  return await cart.deleteCart(pk);
+const deleteCart = async (id) => {
+  return await cart.deleteCart(id);
 }
 
 const readCart = async (userId) => {

@@ -1,11 +1,11 @@
 const cart = require("../services/cartservice");
-
 // 추가추가
 const createOrUpdateCart = async (req, res) => {
-  const { userId, productId, productAmount } = req.body;
+  const userId = req.params.userId;
+  const { productId, productAmount } = req.body;
 
   try {
-    const checkCart = await cart.checkCart(userId, productId, productAmount)
+    await cart.checkCart(userId, productId, productAmount)
     res.status(201).json({ message: "createdCart or updateCart" })
   }
   catch (err) {
@@ -15,7 +15,8 @@ const createOrUpdateCart = async (req, res) => {
 };
 
 const createCart = async (req, res) => {
-  const { userId, productId, productAmount } = req.body;
+  const userId = req.params.userId;
+  const { productId, productAmount } = req.body;
   const hasKey = { userId: false, productId: false, productAmount: false };
   const requireKey = Object.keys(hasKey);
 
@@ -45,7 +46,8 @@ const createCart = async (req, res) => {
 };
 
 const updateCart = async (req, res) => {
-  const { userId, productId, productAmount } = req.body;
+  const userId = req.params.userId;
+  const { productId, productAmount } = req.body;
 
   try {
     await cart.updateCart(userId, productId, productAmount);
@@ -58,20 +60,19 @@ const updateCart = async (req, res) => {
 };
 
 const deleteCart = async (req, res) => {
-  const pk = req.params.pk;
+  const id = req.params.id;
 
   try {
-    await cart.deleteCart(pk)
+    await cart.deleteCart(id)
     res.status(201).json({ message: "Deleted Cart" });
   }
   catch (err) {
     console.log(err)
-    res.status(500).json({ message: "Error deleted Cart" })
+    return res.status(err.statusCode || 500).json(err.message)
   }
 };
 
 const readCart = async (req, res) => {
-
   const userId = req.params.userId;
 
   try {
