@@ -73,7 +73,6 @@ const deleteCart = async (req, res) => {
 };
 
 const readCart = async (req, res) => {
-
   const userId = req.params.userId;
 
   try {
