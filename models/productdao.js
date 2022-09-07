@@ -37,14 +37,21 @@ const getProductDetails = async (productId) => {
 
 const getProductReviewByProductId = async (productId) => {
   return await myDataSource.query(
-    `SELECT review.id, review.productId, review.userId, users.name, review.title, review.content, review.createdAt, reviewImg FROM justmeat.review JOIN justmeat.users ON review.userId = users.id where productId = ?;`, productId)
-}
+    `SELECT * FROM
+    (SELECT review.id, review.productId, review.userId, users.name, review.title, review.content, review.createdAt, review.reviewImg 
+    FROM justmeat.review JOIN justmeat.users ON review.userId = users.id) 
+    as review INNER JOIN 
+    (SELECT userId, JSON_ARRAYAGG(
+    JSON_OBJECT(
+    "userId", userId, "productId", productId, "productName", productName, "productAmount", productAmount 
+    )) as puschaseRecord FROM sales JOIN products ON products.id = sales.productId GROUP BY userId) as sales ON review.userId = sales.userId where productId = ?;`, productId)
+  }
 
-const getSalesProductCount = async (productId)
 
 const createProductReview = async (productId, userId, title, content, reviewImg) => {
   return await myDataSource.query(
-    ``
+    `INSERT INTO (productId, userId, title, content, reviewImg) VALUES 
+    (?, ?, ?, ?);`, [productId, userId, title, content, reviewImg]
   )
 }
 
