@@ -31,7 +31,7 @@ const getItemsByCategories = async (categoryId) => {
 
 const getProductDetails = async (productId) => {
   return await myDataSource.query(
-    `SELECT products.id, products.productName, products.price, products.weight, products.productImgMain, products.productOption, products.stock, products.salesAmount, products.isAntibioticFree, productImages.productImg1, productImages.productImg2, productImages.productImg3 FROM justmeat.products JOIN justmeat.productImages ON products.productImgById = productImages.id WHERE products.id = ?;`, productId
+    `SELECT products.id, products.productName, products.price, products.weight, products.productImgMain, products.productOption, products.stock, products.salesAmount, products.isAntibioticFree, productImages.productImg1, productImages.productImg2, productImages.productImg3 FROM justmeat.products JOIN justmeat.productImages ON products.productImgById = productImages.id WHERE products.id = ?;`, [productId]
   )
 }
 
@@ -44,7 +44,7 @@ const getProductReviewByProductId = async (productId) => {
     (SELECT userId, JSON_ARRAYAGG(
     JSON_OBJECT(
     "userId", userId, "productId", productId, "productName", productName, "productAmount", productAmount 
-    )) as puschaseRecord FROM sales JOIN products ON products.id = sales.productId GROUP BY userId) as sales ON review.userId = sales.userId where productId = ?;`, productId)
+    )) as purchaseRecord FROM sales JOIN products ON products.id = sales.productId GROUP BY userId) as sales ON review.userId = sales.userId where productId = ?;`, productId)
   }
 
 

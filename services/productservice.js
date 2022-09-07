@@ -20,7 +20,6 @@ const getItemsByCategories = async (categoryId) => {
 
 const getProductDetails = async (productId) => {
   const result = await productdao.getProductDetails(productId);
-  console.log(result);
   if(!result.length){
     const error = new Error ("THE PRODUCT YOU REQUESTED DOES NOT EXIST.")
     error.status = 400;
