@@ -18,5 +18,5 @@ const getProductDetails = async (productId) => {
 module.exports = {
   getBestItems,
   getItemsByCategories,
-  getProductDetails  
+  getProductDetails
 }
