@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@prisma/client": "^3.15.2",
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
@@ -39,5 +40,8 @@
   "bugs": {
     "url": "https://github.com/wecode-bootcamp-korea/justcode-6-1st-justmeat-back/issues"
   },
-  "homepage": "https://github.com/wecode-bootcamp-korea/justcode-6-1st-justmeat-back#readme"
+  "homepage": "https://github.com/wecode-bootcamp-korea/justcode-6-1st-justmeat-back#readme",
+  "directories": {
+    "test": "test"
+  }
 }

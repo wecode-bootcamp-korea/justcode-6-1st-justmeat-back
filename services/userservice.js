@@ -15,17 +15,34 @@ const createUser1 = async (email) => {
   return await user.readUserByEmail1(email)
 }
 
+const existedphone = async (phone) => {
+  return await user.confirmNum(phone)
+};
 
 const login = async (email, password) => {
+  const userd = await user.login(email)
 
-  const user = await user.readUserByEmail(email)
+  if (!userd) {
+    const error = new Error("NO_USER")
+    error.statusCode = 400
+    throw error
+  }
 
-  const isPasswordCorrect = bcrypt.compareSync(password, user.password)
+  const isPasswordCorrect = bcrypt.compareSync(password, userd.password)
 
-  if (user && isPasswordCorrect) {
-    const token = jwt.sign({ email: user.email }, 'secretKey') //process.env.secretKey
-    return token;
+  if (!isPasswordCorrect) {
+    const error = new Error("INVALID PASSWORD")
+    error.statusCode = 400
+    throw error
+  }
+
+  if (userd.email && isPasswordCorrect) {
+    const token = jwt.sign({ email: userd.email }, 'secretKey') //process.env.secretKey
+    return {
+      accessToken: token,
+      user_pk: userd.id
+    };
   }
 }
 
-module.exports = { createUser, createUser1, login };
+module.exports = { createUser, createUser1, existedphone, login };

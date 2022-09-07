@@ -1,3 +1,4 @@
+const { setRandomFallback } = require("bcryptjs");
 const { DataSource } = require("typeorm");
 
 const myDataSource = new DataSource({
@@ -28,20 +29,30 @@ const createUser = async (email, hashedPw, name, phone) => {
 
 const readUserByEmail1 = async (email) => {
   const [user] = await myDataSource.query(`
-  SELECT email, password
+  SELECT email
   FROM users
   WHERE email = ?
   `, [email]);
   return user
 }
 
-const readUserByEmail = async (email) => {
+const confirmNum = async (phone) => {
   const [user] = await myDataSource.query(`
-  SELECT email, password
+  SELECT phone
+  FROM users
+  WHERE phone = ?
+  `, [phone]);
+  return user
+}
+
+const login = async (email) => {
+  const [user] = await myDataSource.query(`
+  SELECT id, email, password
   FROM users
   WHERE email = ?
   `, [email]);
   return user
 }
 
-module.exports = { createUser, readUserByEmail, readUserByEmail1 };
+module.exports = { createUser, readUserByEmail1, confirmNum, login };
+
