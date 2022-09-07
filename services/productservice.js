@@ -16,11 +16,16 @@ const getProductDetails = async (productId) => {
 }
 
 const getProductReview = async (productId) => {
-  return await productdao.getProductReview(productId);
+  let getProductReviewByProductId = productdao.getProductReviewByProductId(productId);
+  const { userId } = getProductReviewByProductId;
+  let getSalesProductCount = productdao.getSalesProductCount(userId, productId);
+
+  return await result;
+
 }
 
-const createProductReview = async (productId, userId, title, content) => {
-  return await productdao.createProductReview(productId, userId, title, content);
+const createProductReview = async (productId, userId, title, content, reviewImg) => {
+  return await productdao.createProductReview(productId, userId, title, content, reviewImg);
 }
 
 module.exports = {

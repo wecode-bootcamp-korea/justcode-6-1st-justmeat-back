@@ -41,9 +41,10 @@ const getProductReview = async (req, res) => {
 }
 
 const createProductReview = async (req, res) => {
-  const { productId, userId, title, content } = req.query;
+  const { productId, userId, title, content, reviewImg } = req.query;
   try {
-    const itemData = await productservice.createProductReview(productId, userId, title, content);
+    const itemData = await productservice.createProductReview(productId, userId, title, content, reviewImg);
+    res.status(201).json({itemData});
   } catch {
     res.status(500).json({message: "ERROR"});
   }

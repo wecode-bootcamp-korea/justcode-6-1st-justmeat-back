@@ -8,16 +8,16 @@ const getEventList = async (req, res) => {
         res.status(500).json({ message: "ERROR" });
       }
 }; 
-const getEventDetail = async (req, res) => {
-    const { id, createdAt } = req.query;
+const getEventDetail = async (req, res) => { 
+    const id = req.params.id;
     try {
-        const result = await eventservice.getEventDetail(id, createdAt);
+        const result = await eventservice.getEventDetail(id);
         res.status(201).json({ result });
     } catch {
         res.status(500).json({message : "ERROR"});
     }
-
 }
+
 
 
 module.exports = {

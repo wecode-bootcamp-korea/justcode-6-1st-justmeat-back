@@ -23,11 +23,11 @@ myDataSource.initialize()
     );
   }
 
-  const getEventDetail = async (id, createdAt) => {
+  const getEventDetail = async (id) => {
     return await myDataSource.query(
-        `SELECT * FROM justmeat.event WHERE id = ${id} 
-        AND createdAt LIKE "%${createdAt}%";`);
+        `SELECT * FROM justmeat.event WHERE id = ?;`, id);
   }
+
 
   module.exports = {
     getEventList,

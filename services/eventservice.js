@@ -6,10 +6,10 @@ const getEventList = async () => {
     return await eventdao.getEventList();
   };
 
-const getEventDetail = async (id, createdAt) => {
-    return await eventdao.getEventDetail(id, createdAt);
-
+const getEventDetail = async (id) => {
+    return await eventdao.getEventDetail(id);
 }
+
 
 module.exports = {
     getEventList,
