@@ -31,12 +31,34 @@ const getItemsByCategories = async (categoryId) => {
 
 const getProductDetails = async (productId) => {
   return await myDataSource.query(
-    `SELECT * FROM justmeat.products JOIN justmeat.productImages ON products.productImgById = productImages.id WHERE products.id = ?;`, productId
+    `SELECT products.id, products.productName, products.price, products.weight, products.productImgMain, products.productOption, products.stock, products.salesAmount, products.isAntibioticFree, productImages.productImg1, productImages.productImg2, productImages.productImg3 FROM justmeat.products JOIN justmeat.productImages ON products.productImgById = productImages.id WHERE products.id = ?;`, [productId]
+  )
+}
+
+const getProductReviewByProductId = async (productId) => {
+  return await myDataSource.query(
+    `SELECT * FROM
+    (SELECT review.id, review.productId, review.userId, users.name, review.title, review.content, review.createdAt, review.reviewImg 
+    FROM justmeat.review JOIN justmeat.users ON review.userId = users.id) 
+    as review INNER JOIN 
+    (SELECT userId, JSON_ARRAYAGG(
+    JSON_OBJECT(
+    "userId", userId, "productId", productId, "productName", productName, "productAmount", productAmount 
+    )) as purchaseRecord FROM sales JOIN products ON products.id = sales.productId GROUP BY userId) as sales ON review.userId = sales.userId where productId = ?;`, productId)
+  }
+
+
+const createProductReview = async (productId, userId, title, content, reviewImg) => {
+  return await myDataSource.query(
+    `INSERT INTO (productId, userId, title, content, reviewImg) VALUES 
+    (?, ?, ?, ?);`, [productId, userId, title, content, reviewImg]
   )
 }
 
 module.exports = {
   getBestItems,
   getItemsByCategories,
-  getProductDetails
+  getProductDetails,
+  getProductReviewByProductId,
+  createProductReview,
 };
