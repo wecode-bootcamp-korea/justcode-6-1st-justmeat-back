@@ -9,8 +9,8 @@ const getBestItems = async () => {
 
 const getItemsByCategories = async (categoryId) => {
   const result = await productdao.getItemsByCategories(categoryId);
-  if(!result.length){
-    const error = new Error ("THE CATEGORY YOU REQUESTED DOES NOT EXIST.")
+  if (!result.length) {
+    const error = new Error("THE CATEGORY YOU REQUESTED DOES NOT EXIST.")
     error.status = 400;
     throw error;
   } else {
@@ -20,8 +20,8 @@ const getItemsByCategories = async (categoryId) => {
 
 const getProductDetails = async (productId) => {
   const result = await productdao.getProductDetails(productId);
-  if(!result.length){
-    const error = new Error ("THE PRODUCT YOU REQUESTED DOES NOT EXIST.")
+  if (!result.length) {
+    const error = new Error("THE PRODUCT YOU REQUESTED DOES NOT EXIST.")
     error.status = 400;
     throw error;
   } else {
@@ -30,13 +30,13 @@ const getProductDetails = async (productId) => {
 }
 
 const getProductReview = async (productId) => {
-  return await productdao.getProductReviewByProductId(productId); 
+  return await productdao.getProductReviewByProductId(productId);
 }
 
 const createProductReview = async (productId, userId, title, content, reviewImg) => {
   const count = productdao.findPurchaseRecordOfUser(productId);
-  if(!count){
-    const error = new Error ("YOU CANNOT REVIEW THE PRODUCT YOU NEVER BOUGHT.")
+  if (!count) {
+    const error = new Error("YOU CANNOT REVIEW THE PRODUCT YOU NEVER BOUGHT.")
     error.status = 400;
     throw error;
   } else {
@@ -49,5 +49,5 @@ module.exports = {
   getItemsByCategories,
   getProductDetails,
   getProductReview,
-  createProductReview,  
+  createProductReview,
 }

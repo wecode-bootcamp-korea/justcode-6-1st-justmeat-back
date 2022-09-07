@@ -4,15 +4,17 @@ const createSale = async (req, res) => {
   const userId = req.params.userId;
 
   try {
-    const pass = await sale.pointCheck(userId);
+    const pass = await sale.checkCart(userId)
 
     if (pass) {
-      await sale.createSale(userId)
       await sale.updateProduct(userId)
+      await sale.pointCheck(userId)
+      await sale.createSale(userId)
       await sale.deleteCart(userId)
       res.status(201).json({ message: "구매가 완료 되었습니다. 신선한 상품으로 배송해드리겠습니다" })
-    } else {
-      res.status(500).json({ message: "Point가 없습니다. 구매에 실패하셨습니다." })
+    }
+    else {
+      res.status(400).json({ message: "카트가 비어있습니다" })
     }
   }
   catch (err) {
@@ -35,5 +37,3 @@ const readSale = async (req, res) => {
 }
 
 module.exports = { createSale, readSale }
-
-
