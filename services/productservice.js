@@ -8,15 +8,46 @@ const getBestItems = async () => {
 };
 
 const getItemsByCategories = async (categoryId) => {
-  return await productdao.getItemsByCategories(categoryId);
+  const result = await productdao.getItemsByCategories(categoryId);
+  if (!result.length) {
+    const error = new Error("THE CATEGORY YOU REQUESTED DOES NOT EXIST.")
+    error.status = 400;
+    throw error;
+  } else {
+    return result;
+  }
 }
 
 const getProductDetails = async (productId) => {
-  return await productdao.getProductDetails(productId);
+  const result = await productdao.getProductDetails(productId);
+  if (!result.length) {
+    const error = new Error("THE PRODUCT YOU REQUESTED DOES NOT EXIST.")
+    error.status = 400;
+    throw error;
+  } else {
+    return result;
+  }
+}
+
+const getProductReview = async (productId) => {
+  return await productdao.getProductReviewByProductId(productId);
+}
+
+const createProductReview = async (productId, userId, title, content, reviewImg) => {
+  const count = productdao.findPurchaseRecordOfUser(productId);
+  if (!count) {
+    const error = new Error("YOU CANNOT REVIEW THE PRODUCT YOU NEVER BOUGHT.")
+    error.status = 400;
+    throw error;
+  } else {
+    return await productdao.createProductReview(productId, userId, title, content, reviewImg);
+  }
 }
 
 module.exports = {
   getBestItems,
   getItemsByCategories,
-  getProductDetails
+  getProductDetails,
+  getProductReview,
+  createProductReview,
 }
